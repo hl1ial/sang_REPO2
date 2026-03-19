@@ -1,0 +1,247 @@
+*KEYWORD
+$> 
+$> Primer22.1 created on: Thu Jan 22 21:59:03 2026
+$> Ansys LS-DYNA version: R10.0
+$> 
+$> model title: Yaris_Sled_NCAP_35FF_LSTC_Detailed_H350_iter23 (01/21/2026)
+$>
+$
+$ iter3 (12/18/2024)
+$ from iter2
+$ 1) squashed seat cushion ==> included *INITIAL_FOAM_REF_GEOMETRY
+$ 2) removed flat rigid seat
+$ 3) re-routed seatbelt after removed cushion from seatbelt definition
+$ 4) added Dummy travel Springs for GD plot
+$
+$ iter8 (12/19/2024)
+$ from iter3
+$ 1) used new steering column from full vehicle
+$ 2) used new DAB from full vehicle
+$
+$ iter9 (12/21/2024)
+$ from iter8
+$ 1) used 2007 Yaris vehicle pulse
+$ 2) modified seatbelt length in 10_pretensioner_..
+$
+$ iter10 (12/22/2024)
+$ from iter9
+$ 1) moved dummy H-point y= + 5.0mm
+$ 2) redone dummy presim (5th position)
+$ 3) redone seat squashing (3rd seat squashing)
+$ 4) redonw seatbelt routing
+$ 5) manually changed hand position
+$ 6) adjusted inboard buckle to remove penetration to dummy
+$
+$ iter15 (12/25/2024)
+$ from iter10
+$ 1) added *PARAMETERS into a new include file
+$    --> 00_Parameters_Yaris_Detailed.key
+$ 2) added 32 parameters + 3 existing paratemers = total 35
+$
+$++++++++++++ Year 2025 +++++++++++++++
+$
+$ iter16 (01/02/2025)
+$ from iter15
+$ 1) used MK DAB
+$ 2) used MK Column
+$ 3) repositioned steering column
+$ 4) repositioned dummy
+$ 5) resuqahed seat
+$ 6) rerouted seatbelt
+$ 7) termination time = 120ms
+$ 8) kwyword ewwritten from PRIMER to Dyna R11 version
+$
+$ iter17 (01/09/2025)
+$ from iter16
+$ 1) used very simple steering column from LSTC sled model (24 degree)
+$ 2) used LK DAB
+$ 3) used 2017 Yaris NCAP pulse
+$ 4) dummy to wheel cener = ~285 (2017 Yaris measurement)
+$
+$ iter18 (01/17/2025)
+$ from iter17
+$ 1) added DEF_2_RIGID to DAB
+$
+$ iter18_updated (01/18/2026)
+$ from iter18
+$ 1) updated steering column crash element (beam) F-D curve, which is from
+$    power column (rivet + crash element)
+$ 2) updated column connection rigid body merge card
+$ 3) used 192 CPU
+$
+$ iter19 (01/08/2026)
+$ from iter18_updated
+$ 1) used d3view server
+$
+$ iter20 (01/09/2026)
+$ from iter19
+$ 1) Removed dash reinf from dummy feet contact (PID 3509039)
+$
+$ iter21 (01/15/2026)
+$ from iter20
+$ 1) used new fresh LSTC dummy (include format)
+$ 2) repositioned dummy : 10th position
+$     -.  moved dummy to new H-point
+$ 3) re-squashed seat
+$ 4) re-routed seatbelt
+$    -. updated seabelt cross-sections
+$    -. updated elastic beam stiffeners
+$    -. reconnnected locking tongue
+$ 5) re-run iter21 with updated dummy 11th position (01/16/2026)
+$    -. removed LH foot to floor interference
+$    -. used ORG LSTC dummy and maually updated deformed nodes
+$    -. re-squashed seat and added initial stress solid
+$
+$ iter22 (01/17/2026)
+$ from iter21
+$ 1) moved steering wheel and column by : -10 0 35mm
+$ 2) re-positioned dummy due to hand-wheel interference
+$ 3) re-squashed seat (new initial stress solid)
+$ 4) re-routed seatbelt accordingly
+$ 5) used fresh LSTC dummy with updated dummy tree
+$
+$ iter23 (01/18/2026)
+$ from iter22
+$ 1) changed lower leg angle
+$     -. Repositioned dummy : 13th position
+$     -. Re-squashed seat
+$ iter23_r10 (01/21/2026)
+$
+$ from iter23
+$ 1) files rewritten to R10 version
+$    -. for d3view server
+$ 2) removed floor reinf from dummy feet contact
+$
+$ iter23_100ms
+$ from iter23
+$ 1) changed termiination time from 120ms to 100ms
+$
+$
+$
+$> end_saved_comments
+$
+$PR_VERSION_DATA: 1 : Version-1
+$
+$
+$
+$ ===========================
+$ DEFINE_TRANSFORMATION cards
+$ ===========================
+$
+*DEFINE_TRANSFORMATION_TITLE
+Steering Column Positioning
+         1
+POINT              1 547.90363-285.17761 566.87787
+POINT              2 545.62811-443.16125 565.81628
+POINT              3 418.18359-292.90469 506.36261
+POINT              4 1329.9331-229.17763 826.88092
+POINT              5 1327.6575-387.16125 825.81934
+POINT              6 1200.2129-236.90469 766.36566
+POS6P              1         2         3         4         5         6
+$
+$
+$ =============
+$ INCLUDE cards
+$ =============
+$
+*INCLUDE
+00_Parameters_Yaris_Detailed.key
+$
+*INCLUDE
+01_CONTROL_CARDS.key
+$
+*INCLUDE
+02_CONTACTS_Yaris_Sled.key
+$
+*INCLUDE
+03_Buck_Sled_Yaris.key
+$
+*INCLUDE
+04_SEAT_DEFORMED_13th_POSITION_FINAL_Jan2026.key
+$
+*INCLUDE
+05_IP_Yaris.key
+$
+*INCLUDE
+06_Seatbelt_Yaris_Sled_12th_pos.key
+$
+*INCLUDE
+07_dummy_H350_LSTC_with_PRIMER_tree_13th_pos.key
+$
+*INCLUDE
+08_conx_Rpatch_Yaris_Sled_rev2.key
+$
+*INCLUDE
+09_Beam_Dummy_template.key
+$
+*INCLUDE
+10_pretensioner_retractor_only_from_Jack_iter88.key
+$
+*INCLUDE
+11_simple_column_from_LSTC_12th_position.key
+$
+*INCLUDE
+12_LK_DAB_12th_positioned.key
+$
+*INCLUDE
+13_conx_steer_column_to_body.key
+$
+*INCLUDE
+14_conx_strg_wheel_to_column.key
+$
+*INCLUDE
+15_spings_for_dummy_travel_GD.key
+$
+$
+$
+$ ============
+$ DEFINE cards
+$ ============
+$
+$
+*DEFINE_CURVE
+$:
+$: Cross-reference summary for Load-curve 52400100
+$: -----------------------------------------------
+$:
+$: Body load definition <No label>: Base Z acceleration vs time
+$: X axis : Time                       (Units: Time)
+$: Y axis : Base Z acceleration        (Units: Acceleration)
+$:
+$: Usage: Transient analysis
+$:
+$
+$ Gravity Loading Curve
+$
+  52400100         0       0.0       0.0       0.0       0.0         0         0
+                 0.0        0.0098066004
+             10000.0        0.0098066004
+$
+$
+$
+$ ==========
+$ LOAD cards
+$ ==========
+$
+*LOAD_BODY_Z
+  52400100       1.0         0
+$
+*TITLE
+Yaris_Sled_NCAP_35FF_LSTC_Detailed_H350_iter23_100ms (01/26/2026)
+$
+$
+*END
+$
+$ ==============
+$ Assembly cards
+$ ==============
+$
+*SUBSET
+SECTION BIW SET
+$
+*SUBSET
+dash.key
+$
+*SUBSET
+895_EJ_STEP5_Front_Co_Driver_seat_HIII5F_position_Final.key
+$
